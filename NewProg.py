@@ -96,8 +96,10 @@ def createZpl(infoStr):
     #l = zpl.Label(image_width,height)
     
     
-  
-    bercodezpl = "^XA^BY2,1,100^FO40,40^B3^FD"+infoStr+"^FS^XZ"
+    if (infoStr=="Error"):
+        bercodezpl="^XA^CF0,100^FO50,50^FDERROR^FS^XZ"
+    else:
+        bercodezpl = "^XA^BY1.48,1,80^FO5,30^B3^FD"+infoStr+"^FS^XZ"
 
     print("Got Label as :",bercodezpl)
   
@@ -120,11 +122,12 @@ def createZpl(infoStr):
     except Exception as err:
         print("Cannot print ....")
     return Status
+barcodeCount=0
 
 # Trigger when input is detected
 async def print_events(device):
   buf = ''
-  global keymap, last_scan
+  global keymap, last_scan,barcodeCount
   async for event in device.async_read_loop():
     # key_up= 0 key_down= 1 key_hold= 2
     if event.type == evdev.ecodes.EV_KEY and event.value == 1:
@@ -133,7 +136,7 @@ async def print_events(device):
       if (kv.scancode == evdev.ecodes.KEY_ENTER):
         last_scan = buf
         print("Read Barcode is :", last_scan)
-        barcodeCount=barcodeCount+1
+        barcodeCount+=1
         buf = ''
       else:
         try:
@@ -144,7 +147,7 @@ async def print_events(device):
 
 
 def readInput():
-    global last_scan, MY_NAME, pTable , prevBarcode 
+    global last_scan, MY_NAME, pTable , prevBarcode,barcodeCount
     numpreV=""
     tbName = "Pi import"
     barcodeCount = 0
@@ -164,7 +167,7 @@ def readInput():
                             createZpl((last_scan.lstrip()).rstrip()) #Newline to fill info in to ZPL var
                             print("Creating Duplicate Barcode", last_scan)
                             break
-                        if prevBarcode ==last_scan:
+                        if prevBarcode !=last_scan:
                             createZpl("Error") 
                             break
                 barcodeCount=0    
