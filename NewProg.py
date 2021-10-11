@@ -10,7 +10,7 @@ import threading
 import time
 from time import sleep
 import zpl
-
+from pygame import *
 MY_NAME = 'Rotary3'
 ORDER_ITEM_STATUS = 'pressed'
 
@@ -159,7 +159,7 @@ def readInput():
             
             if barcodeCount ==1:
                 prevBarcode=last_scan
-            
+                
                 print("prevBarcode is now:", prevBarcode)
                 while True:
                     if barcodeCount == 2:
@@ -171,10 +171,13 @@ def readInput():
                             createZpl("Error") 
                             break
                 barcodeCount=0    
-                import time
-                for i in range(3):
-                    time.sleep(1)
-                    print("\a")    
+                import os
+                audiopath = os.getcwd()
+                audiofile = audiopath+("/alarm.mp3")
+                
+                mixer.init()
+                mixer.music.load(audiofile)
+                mixer.music.play()
                 continue        
 
     except KeyboardInterrupt:
@@ -186,6 +189,8 @@ def readInput():
 if __name__ == '__main__':
     print("Stating Capturing barcode")
     import time
+   
+                   
     # for i in range(3):
     #     time.sleep(3)
     #     print("\a")
