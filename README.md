@@ -1,5 +1,6 @@
 Installation
-pip install -r requirements.txt
+
+"pip install -r requirements.txt"
 
 
 Setup for auto start on raspberry pi
