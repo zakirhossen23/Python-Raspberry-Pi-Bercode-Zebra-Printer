@@ -1,15 +1,10 @@
-Description of work
-Look for a Python Raspberry Pi Script that Does the following:
+Installation
+pip install -r requirements.txt
 
--User scans a barcode with a barcode scanner (think barcode on the back of a book)
 
-Then
-
-User Scans another barcode
-
-IF,
-Barcode DOES match, then it prints out a duplicate of that barcode on a label printer that is connected to the Raspberry Pi that will run this script.
-
-IF,
-
-Barcode DOES NOT MATCH, a label with the word "ERROR" gets printed, a 3 second alarm goes off.( alarm will automatically shut off after 3 seconds)
+Setup for auto start on raspberry pi
+Open terminal and write "sudo corntab -e"
+And then at the end add the "@reboot Python3 <Path> &"
+after add this press Control + X and then Hold shift and press Y to save. And then hit enter to confirm.
+  
+  
