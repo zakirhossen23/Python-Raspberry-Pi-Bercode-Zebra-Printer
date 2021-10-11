@@ -1,0 +1,12 @@
+airtable
+asyncio
+datetime
+evdev
+logging
+os
+requests
+sys
+threading
+time
+zpl
+pygame
