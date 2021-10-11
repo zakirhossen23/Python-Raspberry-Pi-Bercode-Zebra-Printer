@@ -159,7 +159,13 @@ def readInput():
             
             if barcodeCount ==1:
                 prevBarcode=last_scan
+                import os
+               
+                audiofile = "/home/pi/Documents/alarm.mp3"
                 
+                mixer.init()
+                mixer.music.load(audiofile)
+                mixer.music.play()                
                 print("prevBarcode is now:", prevBarcode)
                 while True:
                     if barcodeCount == 2:
@@ -171,13 +177,7 @@ def readInput():
                             createZpl("Error") 
                             break
                 barcodeCount=0    
-                import os
-                audiopath = os.getcwd()
-                audiofile = audiopath+("/alarm.mp3")
-                
-                mixer.init()
-                mixer.music.load(audiofile)
-                mixer.music.play()
+
                 continue        
 
     except KeyboardInterrupt:
@@ -189,7 +189,11 @@ def readInput():
 if __name__ == '__main__':
     print("Stating Capturing barcode")
     import time
-   
+    import os
+    audiofile = "/home/pi/Documents/alarm.mp3"
+    mixer.init()
+    mixer.music.load(audiofile)
+    mixer.music.play()
                    
     # for i in range(3):
     #     time.sleep(3)
@@ -207,4 +211,5 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_forever()
     thrId.join()
+
 
