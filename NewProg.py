@@ -102,7 +102,7 @@ def createZpl(infoStr):
     if (infoStr=="Error"):
         bercodezpl="^XA^CF0,100^FO50,50^FDERROR^FS^XZ"
     else:
-        bercodezpl = "^XA^BY1.48,1,80^FO5,30^B3^FD"+infoStr+"^FS^XZ"
+        bercodezpl = "^XA^BY2,2,100^FO60,50^BC^FD"+infoStr+"^FS^XZ61764354"
 
     print("Got Label as :",bercodezpl)
   
@@ -164,7 +164,10 @@ def readInput():
                 prevBarcode=last_scan
                 import os
                
-                
+                # audiofile = "/home/pi/Documents/alarm.mp3"
+            
+                # song = AudioSegment.from_wav(audiofile)
+                # play(song)
                 print("prevBarcode is now:", prevBarcode)
                 while True:
                     if barcodeCount == 2:
@@ -174,13 +177,14 @@ def readInput():
                             break
                         if prevBarcode !=last_scan:
                             createZpl("Error") 
+                            audiofile = "/home/pi/Documents/alarm.mp3"
+                            song = AudioSegment.from_wav(audiofile)
+                            play(song)
+                           
                             break
                         
                 barcodeCount=0    
-                audiofile = "/home/pi/Documents/alarm.mp3"
-            
-                song = AudioSegment.from_wav(audiofile)
-                play(song)
+               
                 continue        
 
     except KeyboardInterrupt:
