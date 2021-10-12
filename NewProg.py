@@ -11,6 +11,9 @@ import time
 from time import sleep
 import zpl
 from pygame import *
+from pydub import AudioSegment
+from pydub.playback import play
+
 MY_NAME = 'Rotary3'
 ORDER_ITEM_STATUS = 'pressed'
 
@@ -161,11 +164,7 @@ def readInput():
                 prevBarcode=last_scan
                 import os
                
-                audiofile = "/home/pi/Documents/alarm.mp3"
                 
-                mixer.init()
-                mixer.music.load(audiofile)
-                mixer.music.play()                
                 print("prevBarcode is now:", prevBarcode)
                 while True:
                     if barcodeCount == 2:
@@ -176,8 +175,12 @@ def readInput():
                         if prevBarcode !=last_scan:
                             createZpl("Error") 
                             break
+                        
                 barcodeCount=0    
-
+                audiofile = "/home/pi/Documents/alarm.mp3"
+            
+                song = AudioSegment.from_wav(audiofile)
+                play(song)
                 continue        
 
     except KeyboardInterrupt:
@@ -191,9 +194,7 @@ if __name__ == '__main__':
     import time
     import os
     audiofile = "/home/pi/Documents/alarm.mp3"
-    mixer.init()
-    mixer.music.load(audiofile)
-    mixer.music.play()
+   
                    
     # for i in range(3):
     #     time.sleep(3)
@@ -211,5 +212,4 @@ if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     loop.run_forever()
     thrId.join()
-
 
